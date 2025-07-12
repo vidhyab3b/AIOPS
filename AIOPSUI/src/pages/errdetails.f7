@@ -155,7 +155,7 @@
               </div> -->
               <div class="text-editor " id="aiprompt-editor" data-placeholder="Enter text..."
               data-mode="popover">
-                <div class="text-editor-content" contenteditable>${errdata.error_Message} please create an ansible playbook to fix this issue. please provide yaml output only</div>
+                <div class="text-editor-content" contenteditable>${errdata.error_Message} please create an ansible playbook check status and start the serives to fix this issue. please provide yaml output only</div>
               </div>
             </div>
           </div>
@@ -307,7 +307,7 @@
           <td class="numeric-cell"><a  href="" @click=${() => openprompt(rca)} >...</a></td>
           <td class="numeric-cell"><a  href="" @click=${() => openanalysis(rca)} >Analysis</a></td>
           <td class="numeric-cell"><a  href="" @click=${() => openyaml(rca)} >Ansible Playbook</a></td>
-          <td class="numeric-cell"><a  href="/sendforapproval/">Send</a></td>
+          <td class="numeric-cell"><a  href="" @click=${() => approve(rca)}>Send</a></td>
         
         </tr>
 
@@ -363,9 +363,9 @@
           </div>
         </div>
         <div class="page-content">
-          <div class="block">
-               test content
-          </div>
+          <textarea cols="100" rows="20" style="overflow-y:scroll;">
+            test content
+          </textarea>
         </div>
       </div>
     </div>
@@ -514,7 +514,10 @@ today =  yyyy + '-' + mm +  '-' + dd ;
        .catch((error) => {
           console.log(error)
           if (error=='Error: 500') {
-              alert('Record has been saved to database')
+              //alert('Record has been saved to database')
+              app.dialog.alert("Status: 1 </br>" + 
+                           "Message: Record has been saved to database" 
+              );
               getrcalist();
           } else {
             alert(error)
@@ -569,7 +572,43 @@ today =  yyyy + '-' + mm +  '-' + dd ;
     }, 1000);
     
     }
-  
+
+ const approve = (rca) => {
+    //console.log(rca.id);
+    var rcaid=rca.id;
+    // var content=playbookpopup.el.children[0].children[1].children[0];
+    // // console.log(propmptpopup.el.children[0].children[1].children[0].innerHTML);
+    // content.innerHTML=rca.ansible_playbook
+    // playbookpopup.open();
+    // $f7.dialog.alert(JSON.stringify( rca.ansible_playbook));
+    setTimeout(function () {
+   app.preloader.show();
+   fetch( app.store.state.aiproxybaseurl + "/api/approve/", {
+        method: 'POST',
+        headers: {
+           'type': 'application/json',
+           'accept': 'application/json',
+          'Content-Type': 'application/json',
+           'origin': ''
+        },
+        body: JSON.stringify({rcaid: rcaid})
+      })
+       .then(res => res.json())
+       .then((data) => {
+          //console.log(data);
+          //{sendstatus: '1', sendmessage: 'ansible script sent to ansible server for record : [503]'}
+          app.dialog.alert("Status: " + data.sendstatus + "</br>" + 
+                           "Message: " + data.sendmessage
+          );
+          app.preloader.hide();
+          //e.$setState({ errdata: errdata });
+        //  console.log(errdata.error_Message)
+       // getaiyaml();
+       })
+    }, 1000);
+    
+ }
+ 
 
  const getaiyaml = () => {
 

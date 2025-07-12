@@ -1,0 +1,72 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="back link">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Current Issues</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong inset">
+        ${user.about}
+      </div>
+      <div class="list list-strong inset list-dividers-ios links-list">
+        <!--ul>
+          ${user.issues.map((link) => $h`
+          <li><a class="external" target="_blank" href="${link.url}">${link.title}</a></li>
+          `)}
+        </ul-->
+
+
+        <table border="1" align="center">
+          <thead>
+            <tr>
+              <th class="label-cell">Server Name</th>
+              <th class="numeric-cell">Error Message</th>
+              <th class="numeric-cell">Time Stamp</th>
+              <th class="numeric-cell">AI RCA</th>
+              <!-- th class="numeric-cell">Carbs</th>
+              <th class="numeric-cell">Protein (g)</th>
+              <th class="medium-only">Comment</th -->
+            </tr>
+          </thead>
+          <tbody>
+            ${errorsjson.map((erroritem) => $h`
+               <tr>
+                <td class="label-cell">${erroritem.server_Name}</td>
+                <td class="numeric-cell">${erroritem.error_Message}</td>
+                <td class="numeric-cell">${erroritem.created_at}</td>
+                <td class="numeric-cell"><a  href="/errdetails/${erroritem.id}/">View</a></td>
+                <!-- td class="numeric-cell">24</td>
+                <td class="numeric-cell">4.0</td>
+                <td class="medium-only">Super tasty</td -->
+              </tr>
+
+              `)}
+
+           
+           
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+ // console.log(app.request)
+  export default (props) => {
+    const user = props.user;
+    const errorsjson=props.errorsjson;
+
+    return $render;
+
+    
+  }
+  
+</script>

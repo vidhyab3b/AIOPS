@@ -50,7 +50,11 @@ app.post('/api/generate', async (req, res) => {
 
     res.json(response.data);
   } catch (error) {
-    res.status(500).json({ error: 'Error generating response:' + error + '\n[prompt: '+ prompt +']' });
+    // console.log(error)
+    res.status(500).json({ status: 0,
+                           errorcode: error.code,
+                           errorname: error.name,
+                           error: error.message  });
   }
 });
 app.post('/api/approve', async (req, res) => {
@@ -67,8 +71,12 @@ app.post('/api/approve', async (req, res) => {
       const { stdout } = await execa("sh " , ["aiops-script.sh "+ rcaid], { cwd: process.env.AIOPSSHPATH,shell:true } ); 
       console.log(stdout);
 
-    } catch (err) {
-        console.log(err);
+    } catch (error) {
+        // console.log(error);
+          res.status(500).json({ sendstatus: 0,
+          errorcode: error.code,
+          errorname: error.name,
+          sendmessage: error.message  });
     }
     const data = {
       sendstatus: "1",

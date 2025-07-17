@@ -9,142 +9,178 @@
           <span class="if-not-md">Back</span>
         </a>
       </div>
-      <div class="title">RCA Dashboard</div>
+      <div class="title">RCA Triage and Remidiation </div>
+    </div>
+    
+  </div>
+  <div class="toolbar toolbar-bottom messagebar" @messagebar:attachmentdelete=${deleteAttachment}>
+    <div class="toolbar-inner">
+      <!--a class="link icon-only" @click=${sheetToggle}>
+        <i class="icon f7-icons if-not-md">camera_fill</i>
+        <i class="icon material-icons md-only">camera_alt</i>
+      </a-->
+      <div class="messagebar-area">
+        <textarea class="resizable" placeholder="Message">How do  fix ${errdata.error_Message}?</textarea>
+      </div>
+      <a class="link icon-only demo-send-message-link" @click=${sendMessage}>
+        <i class="icon f7-icons if-not-md">arrow_up_circle_fill</i>
+        <i class="icon material-icons md-only">send</i>
+      </a>
+    </div>
+    <div class="messagebar-sheet">
+      ${images.map((image) => $h`
+      <label class="checkbox messagebar-sheet-image" @change=${handleAttachment}>
+        <input type="checkbox" />
+        <i class="icon icon-checkbox"></i>
+        <img src=${image} />
+      </label>
+      `)}
     </div>
   </div>
-  <div class="page-content">
-
-    <div class="list list-strong inset list-dividers-ios links-list">
- 
-      <table border="1" align="center">
+  <div class="toolbar toolbar-top tabbar">
+    <div class="toolbar-inner">
+      <a href="#tab-1" class="tab-link tab-link-active" @click=${() => msgbar(0)}>Issue Details</a>
+      <a href="#tab-2" class="tab-link" @click=${() =>  msgbar(1)}>Chat with AI Assistant</a>
+      <a href="#tab-3" class="tab-link" @click=${() => msgbar(0)}>Generate Playbook</a>
       
-        <tbody>
-        
-             <tr>
-              <td class="label-cell">Date</td>
-              <td class="numeric-cell">${errdata.created_at}</td>
-            </tr>
-    
-            <tr>
-              <td class="label-cell">Server Name</td>
-              <td class="numeric-cell">${errdata.server_Name}</td>
-            </tr>
-            <tr>
-              <td class="label-cell">Error Message</td>
-              <td class="numeric-cell">${errdata.error_Message}</td>
-            </tr>
-          
-        
-    
-          
-         
-        </tbody>
-      </table>
     </div>
-    <div class="block-title">Prompt to AI Assistant</div>
-    <div class="list list-strong-ios list-dividers-ios list-outline-ios">
+  </div>
+  
+  <div class="tabs">
+    <div id="tab-1" class="page-content tab tab-active">
+      <div class="list list-strong inset list-dividers-ios links-list">
+ 
+        <table border="1" align="center">
+        
+          <tbody>
+          
+               <tr>
+                <td class="label-cell">Date</td>
+                <td class="numeric-cell">${errdata.created_at}</td>
+              </tr>
+      
+              <tr>
+                <td class="label-cell">Server Name</td>
+                <td class="numeric-cell">${errdata.server_Name}</td>
+              </tr>
+              <tr>
+                <td class="label-cell">Error Message</td>
+                <td class="numeric-cell">${errdata.error_Message}</td>
+              </tr>
+            
+          
+      
+            
+           
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-      <ul>
-<!--
-        <li>
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">Name</div>
-              <div class="item-input-wrap">
-                <input type="text" placeholder="Your name" />
+    <div id="tab-2" class="page-content tab">
+    
+      <div class="page-content messages-content">
+        <div class="messages">
+          <!-- <div class="messages-title"><b>Sunday, Feb 9,</b> 12:58</div>
+          <div class="message message-sent">
+            <div class="message-content">
+              <div class="message-bubble">
+                <div class="message-text">Hi, Kate</div>
               </div>
             </div>
           </div>
-        </li>
-        <li>
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">E-mail</div>
-              <div class="item-input-wrap">
-                <input type="email" placeholder="E-mail" />
+          <div class="message message-sent">
+            <div class="message-content">
+              <div class="message-bubble">
+                <div class="message-text">How are you?</div>
               </div>
             </div>
           </div>
-        </li>
-        <li>
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">URL</div>
-              <div class="item-input-wrap">
-                <input type="url" placeholder="URL" />
+          <div class="message message-received">
+            <div class="message-avatar"
+              style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-9.jpg)"></div>
+            <div class="message-content">
+              <div class="message-name">Kate</div>
+              <div class="message-bubble">
+                <div class="message-text">Hi, I am good!</div>
               </div>
             </div>
           </div>
-        </li>
-        <li>
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">Password</div>
-              <div class="item-input-wrap">
-                <input type="password" placeholder="Password" />
+          <div class="message message-received">
+            <div class="message-avatar"
+              style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-7.jpg)"></div>
+            <div class="message-content">
+              <div class="message-name">Blue Ninja</div>
+              <div class="message-bubble">
+                <div class="message-text">Hi there, I am also fine, thanks! And how are you?</div>
               </div>
             </div>
           </div>
-        </li>
-        <li>
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">Phone</div>
-              <div class="item-input-wrap">
-                <input type="tel" placeholder="Phone" />
+          <div class="message message-sent">
+            <div class="message-content">
+              <div class="message-bubble">
+                <div class="message-text">Hey, Blue Ninja! Glad to see you ;)</div>
               </div>
             </div>
           </div>
-        </li>
-        <li>
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">Gender</div>
-              <div class="item-input-wrap">
-                <select>
-                  <option>Male</option>
-                  <option>Female</option>
-                </select>
+          <div class="message message-sent">
+            <div class="message-content">
+              <div class="message-bubble">
+                <div class="message-text">Hey, look, cutest kitten ever!</div>
               </div>
             </div>
           </div>
-        </li>
-        <li>
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">Birth date</div>
-              <div class="item-input-wrap">
-                <input type="date" placeholder="Birth day" value="2014-04-30" />
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="item-content">
-            <div class="item-inner">
-              <div class="item-title">Toggle</div>
-              <div class="item-after">
-                <label class="toggle toggle-init">
-                  <input type="checkbox" />
-                  <span class="toggle-icon"></span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">Slider</div>
-              <div class="item-input-wrap">
-                <div class="range-slider range-slider-init" data-label="true">
-                  <input type="range" value="50" min="0" max="100" step="1" />
+          <div class="message message-sent">
+            <div class="message-content">
+              <div class="message-bubble">
+                <div class="message-image">
+                  <img src="https://cdn.framework7.io/placeholder/cats-200x260-4.jpg"
+                    style="width:200px; height: 260px" />
                 </div>
               </div>
             </div>
           </div>
-        </li>
-      --> 
+          <div class="message message-received">
+            <div class="message-avatar"
+              style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-9.jpg)"></div>
+            <div class="message-content">
+              <div class="message-name">Kate</div>
+              <div class="message-bubble">
+                <div class="message-text">Nice!</div>
+              </div>
+            </div>
+          </div>
+          <div class="message message-received">
+            <div class="message-avatar"
+              style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-9.jpg)"></div>
+            <div class="message-content">
+              <div class="message-name">Kate</div>
+              <div class="message-bubble">
+                <div class="message-text">Like it very much!</div>
+              </div>
+            </div>
+          </div>
+          <div class="message message-received">
+            <div class="message-avatar"
+              style="background-image:url(https://cdn.framework7.io/placeholder/people-100x100-7.jpg)"></div>
+            <div class="message-content">
+              <div class="message-name">Blue Ninja</div>
+              <div class="message-bubble">
+                <div class="message-text">Awesome!</div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div id="tab-3" class="page-content tab ">
+
+    
+    <div class="block-title">Prompt Playbook specifications</div>
+    <div class="list list-strong-ios list-dividers-ios list-outline-ios">
+
+      <ul>
+
         <li class="align-top">
           <div class="item-content item-input">
             <div class="item-inner">
@@ -153,171 +189,62 @@
                 
                 <textarea class="aiprompt-editor" id="aiprompt-editor" placeholder=""></textarea> 
               </div> -->
-              <div class="text-editor " id="aiprompt-editor" data-placeholder="Enter text..."
-              data-mode="popover">
-                <div class="text-editor-content" contenteditable>${errdata.error_Message} please create an ansible playbook check status and start the serives to fix this issue. please provide yaml output only</div>
+              <div class="text-editor text-editor-resizable" id="aiprompt-editor" data-placeholder="Enter text..."
+              data-mode="popover" >
+                <div class="text-editor-content" contenteditable>${errdata.error_Message} please create an ansible playbook check status and start the services to fix this issue. please provide yaml output only</div>
               </div>
             </div>
           </div>
         </li>
-        <!-- 
-        <li class="align-top">
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">Resizable</div>
-              <div class="item-input-wrap">
-                <textarea placeholder="Bio" class="resizable"></textarea>
-              </div>
-            </div>
-          </div>
-        </li>
-        -->
-      </ul>
-    </div>
-    <div class="block-title">Send to AI Assistant</div>
-    <div class="block block-strong-ios block-outline-ios grid grid-cols-2 grid-gap">
-      <!-- <a href="#" class="button">Button</a> -->
-      <a  href="" class="button button-fill" @click=${() => sendtoai()} >Send</a>
-      <!-- 
-      <a href="#" class="button button-raised">Raised</a>
-      <a href="#" class="button button-raised button-fill">Raised Fill</a>
-      <a href="#" class="button button-round">Round</a>
-      <a href="#" class="button button-round button-fill">Round Fill</a>
-      <a href="#" class="button button-outline">Outline</a>
-      <a href="#" class="button button-round button-outline">Outline Round</a>
-      <a href="#" class="button button-small button-outline">Small</a>
-      <a href="#" class="button button-small button-round button-outline">Small Round</a>
-      <a href="#" class="button button-small button-fill">Small</a>
-      <a href="#" class="button button-small button-round button-fill">Small Round</a>
-      <a href="#" class="button button-large button-raised">Large</a>
-      <a href="#" class="button button-large button-fill button-raised">Large Fill</a>
-      <a href="#" class="button button-large button-fill button-raised color-red">Large Red</a>
-      <a href="#" class="button button-large button-fill button-raised color-green">Large Green</a>
-      -->  
-    </div>
-    <!-- 
-    <div class="block-title">Checkbox group</div>
-    <div class="list list-strong-ios list-outline-ios list-dividers-ios">
-      <ul>
-        <li>
-          <label class="item-checkbox item-content">
-            <input type="checkbox" name="checkbox" value="Books" checked="checked" />
-            <i class="icon icon-checkbox"></i>
-            <div class="item-inner">
-              <div class="item-title">Books</div>
-            </div>
-          </label>
-        </li>
-        <li>
-          <label class="item-checkbox item-content">
-            <input type="checkbox" name="checkbox" value="Movies" />
-            <i class="icon icon-checkbox"></i>
-            <div class="item-inner">
-              <div class="item-title">Movies</div>
-            </div>
-          </label>
-        </li>
-        <li>
-          <label class="item-checkbox item-content">
-            <input type="checkbox" name="checkbox" value="Food" />
-            <i class="icon icon-checkbox"></i>
-            <div class="item-inner">
-              <div class="item-title">Food</div>
-            </div>
-          </label>
-        </li>
-        <li>
-          <label class="item-checkbox item-content">
-            <input type="checkbox" name="checkbox" value="Drinks" />
-            <i class="icon icon-checkbox"></i>
-            <div class="item-inner">
-              <div class="item-title">Drinks</div>
-            </div>
-          </label>
-        </li>
-      </ul>
-    </div>
-
-  
-    <div class="block-title">Radio buttons group</div>
-    <div class="list list-strong-ios list-outline-ios list-dividers-ios">
-      <ul>
-        <li>
-          <label class="item-radio item-content">
-            <input type="radio" name="radio" value="Books" checked="checked" />
-            <i class="icon icon-radio"></i>
-            <div class="item-inner">
-              <div class="item-title">Books</div>
-            </div>
-          </label>
-        </li>
-        <li>
-          <label class="item-radio item-content">
-            <input type="radio" name="radio" value="Movies" />
-            <i class="icon icon-radio"></i>
-            <div class="item-inner">
-              <div class="item-title">Movies</div>
-            </div>
-          </label>
-        </li>
-        <li>
-          <label class="item-radio item-content">
-            <input type="radio" name="radio" value="Food" />
-            <i class="icon icon-radio"></i>
-            <div class="item-inner">
-              <div class="item-title">Food</div>
-            </div>
-          </label>
-        </li>
-        <li>
-          <label class="item-radio item-content">
-            <input type="radio" name="radio" value="Drinks" />
-            <i class="icon icon-radio"></i>
-            <div class="item-inner">
-              <div class="item-title">Drinks</div>
-            </div>
-          </label>
-        </li>
-      </ul>
-    </div>
--->
-<div class="block-title">AI RCA Dashboard</div>
-<div class="list list-strong inset list-dividers-ios links-list">
- 
-  <table border="1" align="center">
-    <thead>
-      <tr>
-        <th class="label-cell">Prompt Date</th>
-        <th class="numeric-cell">Prompt</th>
-        <th class="numeric-cell">Resolution</th>
-        <th class="numeric-cell">Details</th>
-        <th class="numeric-cell">Request for Approval</th>
-   
-      </tr>
-    </thead>
-    <tbody>
-   
-    
-     
-
-       ${rcasdata.map((rca) => $h`
-
-         <tr>
-          <td class="label-cell">${rca.created_at}</td>
-          <td class="numeric-cell"><a  href="" @click=${() => openprompt(rca)} >...</a></td>
-          <td class="numeric-cell"><a  href="" @click=${() => openanalysis(rca)} >Analysis</a></td>
-          <td class="numeric-cell"><a  href="" @click=${() => openyaml(rca)} >Ansible Playbook</a></td>
-          <td class="numeric-cell"><a  href="" @click=${() => approve(rca)}>Send</a></td>
-        
-        </tr>
-
-       `)}
-
       
+      </ul>
+    </div>
+    <div class="block-title">Create Playbook</div>
+    <div class="block block-strong-ios block-outline-ios grid grid-cols-2 grid-gap">
      
-    </tbody>
-  </table>
-</div>
+      <a  href="" class="button button-fill" @click=${() => sendtoai()} >Generate</a>
+   
+    </div>
+   
+    <div class="block-title">Genrated AI Playbooks  </div>
+    <div class="list list-strong inset list-dividers-ios links-list">
+    
+      <table border="1" align="center">
+        <thead>
+          <tr>
+            <th class="label-cell">Prompt Date</th>
+            <!-- <th class="numeric-cell">Prompt</th> -->
+            <!-- <th class="numeric-cell">Resolution</th> -->
+            <th class="numeric-cell">Details</th>
+            <th class="numeric-cell">Action</th>
+            <th class="numeric-cell">Run Status</th>
+      
+          </tr>
+        </thead>
+        <tbody>
+      
+        
+        
+
+          ${rcasdata.map((rca) => $h`
+
+            <tr>
+              <td class="label-cell">${rca.created_at}</td>
+              <!-- <td class="numeric-cell"><a  href="" @click=${() => openprompt(rca)} >...</a></td> -->
+              <!-- <td class="numeric-cell"><a  href="" @click=${() => openanalysis(rca)} >Analysis</a></td> -->
+              <td class="numeric-cell"><a  href="" @click=${() => openyaml(rca)} >Ansible Playbook</a></td>
+              <td class="numeric-cell"><a  href="" @click=${() => approve(rca)}>Approve</a></td>
+              <td class="numeric-cell"><a  href="" @click=${() => openpbstat(rca)}>View</a></td>
+            
+            </tr>
+
+          `)}
+
+          
+        
+        </tbody>
+      </table>
+    </div>
      <!-- Prompt Details-->
      <div class="popup prompt-popup" data-close-on-escape="true" data-swipe-to-close="to-bottom"> 
       <div class="page">
@@ -374,7 +301,7 @@
         <div class="navbar">
           <div class="navbar-bg"></div>
           <div class="navbar-inner">
-            <div class="title">AI Response</div>
+            <div class="title">Generated Playbook(View/Edit)</div>
             <div class="right"><a class="link popup-close">Close</a></div>
           </div>
         </div>
@@ -388,19 +315,74 @@
         </div>
       </div>
     </div>
+
+    <div class="popup playbookstat-popup" data-close-on-escape="true" data-swipe-to-close="to-bottom"> 
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner">
+            <div class="title">Playbook Status</div>
+            <div class="right"><a class="link popup-close">Close</a></div>
+          </div>
+        </div>
+        <div class="page-content">
+          
+          <table border="1" align="center">
+            <thead>
+              <tr>
+                <th class="label-cell">Execution Date</th>
+                <th class="numeric-cell">Server</th>
+                <th class="numeric-cell">Status</th>
+               
+           
+              </tr>
+            </thead>
+            <tbody>
+           
+            
+             
+        
+               ${pbstatdata.map((pbstat) => $h`
+        
+                 <tr>
+                  <td class="label-cell">${pbstat.created_at}</td>
+                  <td class="label-cell">${pbstat.sever_Name}</td>
+                  <td class="label-cell">${pbstat.execution_Status}</td>
+                
+                </tr>
+        
+               `)}
+        
+              
+             
+            </tbody>
+          </table>
+         
+        </div>
+      </div>
+    </div>
+ 
+    </div>
   </div>
+  <!-- <div class="page-content">
+
+
+
+  </div> -->
 </div>
 </template>
 <script>
 var tapp;
-export default (props,  { $f7,  $on, $onMounted, $onBeforeUnmount, $update}) => {
+export default (props,  { $f7,  $on, $, $el , $onMounted, $onBeforeUnmount, $update}) => {
  var app;
+ var page;
  var $$ ;
  let aiprompteditor;
  let propmptpopup;
  let airesponsepopup;
  let promptrespopup;
  let playbookpopup;
+ let pbstatpopup;
  let errdata={
      server_Name: '',
      error_Message: '',
@@ -414,6 +396,12 @@ export default (props,  { $f7,  $on, $onMounted, $onBeforeUnmount, $update}) => 
      ansible_playbook: '',
      created_at: '',
      id: ''
+ }];
+ let pbstatdata=[{
+     created_at: '',
+     server_Name: '',
+     excecution_status: ''
+     
  }];
  let airesponsedata=[];
  let airesyamldata=[];
@@ -432,6 +420,47 @@ export default (props,  { $f7,  $on, $onMounted, $onBeforeUnmount, $update}) => 
       // $f7.dialog.alert(JSON.stringify( rca.prompt));
       
     }
+
+ const openpbstat = (rca) => {
+    console.log(rca)
+   // var content=pbstatpopup.el.children[0].children[1].children[0];
+    // console.log(propmptpopup.el.children[0].children[1].children[0].innerHTML);
+   // content.innerHTML=rca.prompt
+   setTimeout(function () {
+   app.preloader.show();
+   fetch( app.store.state.baseurl + "/pstats/search/"+rca.id, {
+        method: 'GET',
+        headers: {
+          'type': 'application/json',
+           'accept': 'application/json',
+          'Content-Type': 'application/json',
+           'origin': ''
+        },
+      })
+       .then(res => res.json())
+       .then((data) => {
+          //console.log(data);
+          pbstatdata=data;
+          $update();
+          pbstatpopup.open();
+          app.preloader.hide();
+          //e.$setState({ errdata: errdata });
+          
+         
+       })
+    }, 1000);
+
+
+
+
+
+  
+    // $f7.dialog.alert(JSON.stringify( rca.prompt));
+    
+ }
+
+    
+
  const openanalysis = (rca) => {
       // console.log(rca);
       var content=airesponsepopup.el.children[0].children[1].children[0];
@@ -554,17 +583,22 @@ today =  yyyy + '-' + mm +  '-' + dd ;
        .then(res => res.json())
        .then((data) => {
           console.log(data);
-          airesponsedata=data;
-
-          var content=promptrespopup.el.children[0].children[1].children[0];
-          // console.log(propmptpopup.el.children[0].children[1].children[0].innerHTML);
-          content.innerHTML=airesponsedata.candidates[0].content.parts[0].text.replace("\\n", "</br>&nbsp;");
-          console.log(content.innerHTML);
-         airesponsetext=""  ;//ontent.innerHTML;
-          airesyamltext=content.innerHTML; //save ansible as well
-          promptrespopup.open()
-          app.preloader.hide();
-
+          if (typeof data.status !== 'undefined') {
+              // the variable is defined
+              console.log(data)
+              app.dialog.alert(JSON.stringify(data.error))
+              app.preloader.hide();
+          } else {
+            airesponsedata=data;
+            var content=promptrespopup.el.children[0].children[1].children[0];
+            // console.log(propmptpopup.el.children[0].children[1].children[0].innerHTML);
+            content.innerHTML=airesponsedata.candidates[0].content.parts[0].text.replace("\\n", "</br>&nbsp;");
+            console.log(content.innerHTML);
+            airesponsetext=""  ;//ontent.innerHTML;
+            airesyamltext=content.innerHTML; //save ansible as well
+            promptrespopup.open()
+            app.preloader.hide();
+          }
           //e.$setState({ errdata: errdata });
         //  console.log(errdata.error_Message)
        // getaiyaml();
@@ -677,8 +711,186 @@ today =  yyyy + '-' + mm +  '-' + dd ;
 
  }  
     
-      
+  //Chat Variables 
+  const msgbar = (show) => {
+        var display=true;
+        if (show==1){
+          display=false
+        }
+        messagebar.el.hidden=display;
+  }
   
+  const images = [
+      'https://cdn.framework7.io/placeholder/cats-300x300-1.jpg',
+      'https://cdn.framework7.io/placeholder/cats-200x300-2.jpg',
+      'https://cdn.framework7.io/placeholder/cats-400x300-3.jpg',
+      'https://cdn.framework7.io/placeholder/cats-300x150-4.jpg',
+      'https://cdn.framework7.io/placeholder/cats-150x300-5.jpg',
+      'https://cdn.framework7.io/placeholder/cats-300x300-6.jpg',
+      'https://cdn.framework7.io/placeholder/cats-300x300-7.jpg',
+      'https://cdn.framework7.io/placeholder/cats-200x300-8.jpg',
+      'https://cdn.framework7.io/placeholder/cats-400x300-9.jpg',
+      'https://cdn.framework7.io/placeholder/cats-300x150-10.jpg'
+    ];
+    const people = [
+      {
+        name: 'AIOPS Assistant',
+        avatar: 'https://cdn.framework7.io/placeholder/people-100x100-9.jpg'
+      },
+      {
+        name: 'Blue Ninja',
+        avatar: 'https://cdn.framework7.io/placeholder/people-100x100-7.jpg'
+      },
+    ];
+    const answers = [
+      'Yes!',
+      'No',
+      'Hm...',
+      'I am not sure',
+      'And what about you?',
+      'May be ;)',
+      'Lorem ipsum dolor sit amet, consectetur',
+      'What?',
+      'Are you sure?',
+      'Of course',
+      'Need to think about it',
+      'Amazing!!!',
+    ];
+
+    let responseInProgress = false;
+    let messagebar;
+    let messages;
+
+    const sheetToggle = () => {
+      messagebar.sheetToggle();
+    }
+    const deleteAttachment = (e, index) => {
+      var image = messagebar.attachments.splice(index, 1)[0];
+      messagebar.renderAttachments();
+      checkAttachments();
+      // Uncheck in sheet
+      var imageIndex = images.indexOf(image);
+      $el.value.find('.messagebar-sheet .checkbox').eq(imageIndex).find('input').prop('checked', false);
+    }
+    const handleAttachment = (e) => {
+      var index = $(e.target).parents('label.checkbox').index();
+      var image = images[index];
+      if (e.target.checked) {
+        // Add to attachments
+        messagebar.attachments.unshift(image)
+      } else {
+        // Remove from attachments
+        messagebar.attachments.splice(messagebar.attachments.indexOf(image), 1);
+      }
+      messagebar.renderAttachments();
+      checkAttachments();
+    }
+    const checkAttachments = () => {
+      if (messagebar.attachments.length > 0) {
+        messagebar.attachmentsShow();
+        messagebar.setPlaceholder('Add comment or Send');
+      } else {
+        messagebar.attachmentsHide();
+        messagebar.setPlaceholder('Message');
+      }
+    }
+    const sendMessage = () => {
+      var airesponsedata=""
+      var answer=""
+      var text = messagebar.getValue().replace(/\n/g, '<br />').trim();
+      var messagesToSend = [];
+      messagebar.attachments.forEach(function (attachment) {
+        var size = attachment.split('placeholder/cats-')[1].split('-')[0].split('x');
+        messagesToSend.push({
+          image: '<img src="' + attachment + '" style="width: ' + (size[0] / 2) + 'px; height: ' + (size[1] / 2) + 'px">'
+        });
+      });
+      if (text.trim().length) {
+        messagesToSend.push({
+          text: text
+        });
+      }
+      // Reset attachments
+      messagebar.attachments = [];
+      checkAttachments();
+      // Hide sheet
+      messagebar.sheetHide();
+      // Uncheck selected images in sheet
+      messagebar.$sheetEl.find('input').prop('checked', false);
+      // Clear area
+      messagebar.clear();
+      // Focus area
+      if (text.length) messagebar.focus();
+      // Exit when nothing to send
+      if (!messagesToSend.length) return;
+      // Send message
+      messages.addMessages(messagesToSend);
+
+      // Mock response
+      if (responseInProgress) return;
+      responseInProgress = true;
+     // setTimeout(function () {
+       // var answer = answers[Math.floor(Math.random() * answers.length)];
+       
+
+
+
+        setTimeout(function () {
+
+          var person = people[0];
+          messages.showTyping({
+            header: person.name + ' is typing',
+            avatar: person.avatar
+          });
+
+          fetch( app.store.state.aiproxybaseurl + "/api/generate/", {
+            method: 'POST',
+            headers: {
+              'type': 'application/json',
+              'accept': 'application/json',
+              'Content-Type': 'application/json',
+              'origin': ''
+            },
+            body: JSON.stringify({text: text})
+          })
+          .then(res => res.json())
+          .then((data) => {
+              console.log(data);
+              airesponsedata=data;
+
+              //var content=promptrespopup.el.children[0].children[1].children[0];
+              // console.log(propmptpopup.el.children[0].children[1].children[0].innerHTML);
+              //content.innerHTML=airesponsedata.candidates[0].content.parts[0].text.replace("\\n", "</br>&nbsp;");
+              //console.log(content.innerHTML);
+              answer=airesponsedata.candidates[0].content.parts[0].text.replace(/\n/g, '<br />').trim();
+              messages.addMessage({
+                text: answer,
+                type: 'received',
+                name: person.name,
+                avatar: person.avatar
+              });
+              
+              messages.hideTyping();
+              responseInProgress = false;
+              //e.$setState({ errdata: errdata });
+            //  console.log(errdata.error_Message)
+          // getaiyaml();
+          })
+
+
+
+
+          
+
+
+
+
+        }, 1000);
+     // }, 1000);
+    }
+  
+
+  // End chat variables 
   $on('pageInit', (e, page) => {
       //console.log('pageInit', page);
       app=page.app;
@@ -739,7 +951,38 @@ today =  yyyy + '-' + mm +  '-' + dd ;
         el: '#aiprompt-editor',
         buttons:[]
       });
+      pbstatpopup = $f7.popup.create({
+        el: '.playbookstat-popup',
+        swipeToClose: true,
+      });
+      //chat functions 
+
       
+      messagebar = $f7.messagebar.create({
+        el: $el.value.find('.messagebar'),
+        attachments: []
+      });
+      messagebar.el.hidden=true;
+     // console.log(messagebar);
+      messages = $f7.messages.create({
+        el: $el.value.find('.messages'),
+        firstMessageRule: function (message, previousMessage, nextMessage) {
+          if (message.isTitle) return false;
+          if (!previousMessage || previousMessage.type !== message.type || previousMessage.name !== message.name) return true;
+          return false;
+        },
+        lastMessageRule: function (message, previousMessage, nextMessage) {
+          if (message.isTitle) return false;
+          if (!nextMessage || nextMessage.type !== message.type || nextMessage.name !== message.name) return true;
+          return false;
+        },
+        tailMessageRule: function (message, previousMessage, nextMessage) {
+          if (message.isTitle) return false;
+          if (!nextMessage || nextMessage.type !== message.type || nextMessage.name !== message.name) return true;
+          return false;
+        }
+      });
+      //end chat function 
     })
     
 
@@ -753,6 +996,10 @@ today =  yyyy + '-' + mm +  '-' + dd ;
       if (aiprompteditor) aiprompteditor.destroy();
       
       
+    })
+    $on('pageBeforeRemove', () => {
+      messagebar.destroy()
+      messages.destroy()
     })
 
 return $render;

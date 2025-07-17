@@ -20,11 +20,11 @@ public class PlaybookStatus extends PanacheEntity {
     public Long id;
     public Long Error_ID;
     public Long RCA_ID;
-    public String Server_Name;
-    public String Execution_Status;
+    public String server_Name;
+    public String execution_Status;
     public LocalDate Created_at;
     public LocalDate Modified_at;
-    public PlaybookStatus findByErrid(int id){
+    public PlaybookStatus findByRCAid(int id){
         return find("#findByRCAid", id).firstResult();
     }
     @POST

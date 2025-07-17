@@ -14,4 +14,5 @@ public class Error_Table extends PanacheEntity {
     public String Server_Name;
     public String Error_Message;
     public LocalDate Created_at;
+    public String Status;
 }

@@ -30,6 +30,7 @@
               <th class="label-cell">Server Name</th>
               <th class="numeric-cell">Error Message</th>
               <th class="numeric-cell">Time Stamp</th>
+              <th class="numeric-cell">Status</th>
               <th class="numeric-cell">AI RCA</th>
               <!-- th class="numeric-cell">Carbs</th>
               <th class="numeric-cell">Protein (g)</th>
@@ -42,6 +43,7 @@
                 <td class="label-cell">${erroritem.server_Name}</td>
                 <td class="numeric-cell">${erroritem.error_Message}</td>
                 <td class="numeric-cell">${erroritem.created_at}</td>
+                <td class="numeric-cell">${erroritem.status}</td>
                 <td class="numeric-cell"><a  href="/errdetails/${erroritem.id}/">View</a></td>
                 <!-- td class="numeric-cell">24</td>
                 <td class="numeric-cell">4.0</td>

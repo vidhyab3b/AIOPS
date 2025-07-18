@@ -199,6 +199,33 @@
       
       </ul>
     </div>
+    <div class="block-title">Select Model</div>
+    <div class="block block-strong-ios block-outline-ios grid grid-cols-2 grid-gap">
+      <a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true"
+      data-searchbar-placeholder="Search model">
+      <select name="model" >
+        <optgroup label="Gemini">
+          <option value="gemini-2.5-flash" selected>gemini-2.5-flash</option>
+          <option value="gemini-1.5-flash-8b">gemini-1.5-flash-8b</option>
+          <option value="gemini-2.0-flash-lite">gemini-2.0-flash-lite</option>
+        </optgroup>
+        <optgroup label="ollama">
+          <option value="mistral-small3.2">mistral-small3.2</option>
+          <option value="gemma3n">gemma3n</option>
+          <option value="qwen2.5vl">qwen2.5vl</option>
+        </optgroup>
+        <optgroup label="deepseek">
+          <option value="deepseek-chat">deepseek-chat</option>
+          <option value="deepseek-reasoner">deepseek-reasoner</option>
+        </optgroup>
+      </select>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-title">AI Models</div>
+        </div>
+      </div>
+    </a>
+    </div>
     <div class="block-title">Create Playbook</div>
     <div class="block block-strong-ios block-outline-ios grid grid-cols-2 grid-gap">
      

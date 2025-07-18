@@ -3,8 +3,10 @@ import { createStore } from 'framework7';
 
 const store = createStore({
   state: {
-    baseurl: "http://localhost:8080",
-    aiproxybaseurl: "http://localhost:8002",
+    // baseurl: "http://localhost:8080", //var baseurl="http://100.69.84.37:8080";
+    // aiproxybaseurl: "http://localhost:8002",
+    baseurl: "http://100.69.84.37:8080", //var baseurl="http://100.69.84.37:8080";
+    aiproxybaseurl: "http://100.69.84.37:8002",
     products: [
       {
         id: '1',

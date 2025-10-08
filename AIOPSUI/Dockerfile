@@ -1,4 +1,4 @@
-FROM node
+FROM docker.io/library/node:latest
 WORKDIR /app
 COPY package*.json ./
 COPY ./ .

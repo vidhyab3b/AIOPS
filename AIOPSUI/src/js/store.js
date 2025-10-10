@@ -6,7 +6,7 @@ const store = createStore({
     // baseurl: "http://localhost:8080", //var baseurl="http://100.69.84.37:8080";
     // aiproxybaseurl: "http://localhost:8002",
     baseurl: "http://aiops-qks-aiops.apps.cluster-wkq7q.wkq7q.sandbox2937.opentlc.com", //var baseurl="http://100.69.84.37:8080";
-    aiproxybaseurl: "http://100.69.84.37:8002",
+    aiproxybaseurl: "http://aiproxy-aiops.apps.cluster-wkq7q.wkq7q.sandbox2937.opentlc.com",
     products: [
       {
         id: '1',

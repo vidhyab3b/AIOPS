@@ -3,11 +3,11 @@ import path from 'path';
 import framework7 from 'rollup-plugin-framework7';
 
 import { createHtmlPlugin } from 'vite-plugin-html';
-export default defineConfig({
+/* export default defineConfig({
   server: {
     cors: false, // Disables CORS headers from Vite's dev server
   },
-});
+}); */
 
 process.env.TARGET = process.env.TARGET || 'web';
 const isCordova = process.env.TARGET === 'cordova';
@@ -49,6 +49,7 @@ export default async () => {
     },
     server: {
       host: true,
+      cors: false,
       allowedHosts: ['aiopsui-aiops.apps.cluster-wkq7q.wkq7q.sandbox2937.opentlc.com']
     },
     esbuild: {

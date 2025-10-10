@@ -3,6 +3,11 @@ import path from 'path';
 import framework7 from 'rollup-plugin-framework7';
 
 import { createHtmlPlugin } from 'vite-plugin-html';
+export default defineConfig({
+  server: {
+    cors: false, // Disables CORS headers from Vite's dev server
+  },
+});
 
 process.env.TARGET = process.env.TARGET || 'web';
 const isCordova = process.env.TARGET === 'cordova';

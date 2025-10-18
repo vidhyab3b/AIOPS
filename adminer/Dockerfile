@@ -1,4 +1,4 @@
-FROM docker.io/library/php:8.2-cli
+FROM php:8.2-cli
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
 

@@ -9,55 +9,114 @@
             <span class="if-not-md">Back</span>
           </a>
         </div>
-        <div class="title">Current Issues</div>
+        <div class="title">View Issues</div>
       </div>
     </div>
-    <div class="page-content">
-      <div class="block block-strong inset">
-        ${user.about}
+    <div class="toolbar toolbar-bottom tabbar">
+      <div class="toolbar-inner">
+        <a href="#tab-1" class="tab-link tab-link-active">Current Issues</a>
+        <a href="#tab-2" class="tab-link">Resolved Issues</a>
+        
       </div>
-      <div class="list list-strong inset list-dividers-ios links-list">
-        <!--ul>
-          ${user.issues.map((link) => $h`
-          <li><a class="external" target="_blank" href="${link.url}">${link.title}</a></li>
-          `)}
-        </ul-->
-
-
-        <table border="1" align="center">
-          <thead>
-            <tr>
-              <th class="label-cell">Server Name</th>
-              <th class="numeric-cell">Error Message</th>
-              <th class="numeric-cell">Time Stamp</th>
-              <th class="numeric-cell">Status</th>
-              <th class="numeric-cell">AI RCA</th>
-              <!-- th class="numeric-cell">Carbs</th>
-              <th class="numeric-cell">Protein (g)</th>
-              <th class="medium-only">Comment</th -->
-            </tr>
-          </thead>
-          <tbody>
-            ${errorsjson.map((erroritem) => $h`
-               <tr>
-                <td class="label-cell">${erroritem.server_Name}</td>
-                <td class="numeric-cell">${erroritem.error_Message}</td>
-                <td class="numeric-cell">${erroritem.created_at}</td>
-                <td class="numeric-cell">${erroritem.status}</td>
-                <td class="numeric-cell"><a  href="/errdetails/${erroritem.id}/">View</a></td>
-                <!-- td class="numeric-cell">24</td>
-                <td class="numeric-cell">4.0</td>
-                <td class="medium-only">Super tasty</td -->
-              </tr>
-
+    </div>
+    <swiper-container class="tabs">
+      <swiper-slide id="tab-1" class="page-content tab tab-active">
+        <div class="block">
+          <div class="block block-strong inset">
+            ${user.about}
+          </div>
+          <div class="list list-strong inset list-dividers-ios links-list">
+            <!--ul>
+              ${user.issues.map((link) => $h`
+              <li><a class="external" target="_blank" href="${link.url}">${link.title}</a></li>
               `)}
-
-           
-           
-          </tbody>
-        </table>
-      </div>
-    </div>
+            </ul-->
+    
+           <!-- Error Lists--> 
+            <table border="1" align="center">
+              <thead>
+                <tr>
+                  <th class="label-cell">Server Name</th>
+                  <th class="numeric-cell">Error Message</th>
+                  <th class="numeric-cell">Time Stamp</th>
+                  <th class="numeric-cell">Status</th>
+                  <th class="numeric-cell">AI RCA</th>
+                  <!-- th class="numeric-cell">Carbs</th>
+                  <th class="numeric-cell">Protein (g)</th>
+                  <th class="medium-only">Comment</th -->
+                </tr>
+              </thead>
+              <tbody>
+                ${errorsjson.map((erroritem) => $h`
+                   <tr>
+                    <td class="label-cell">${erroritem.server_Name}</td>
+                    <td class="numeric-cell">${erroritem.error_Message}</td>
+                    <td class="numeric-cell">${erroritem.created_at}</td>
+                    <td class="numeric-cell">${erroritem.status}</td>
+                    <td class="numeric-cell"><a  href="/errdetails/${erroritem.id}/">View</a></td>
+                    <!-- td class="numeric-cell">24</td>
+                    <td class="numeric-cell">4.0</td>
+                    <td class="medium-only">Super tasty</td -->
+                  </tr>
+    
+                  `)}
+    
+               
+               
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide id="tab-2" class="page-content tab ">
+        <div class="block">
+          <div class="block block-strong inset">
+            ${user.about}
+          </div>
+          <div class="list list-strong inset list-dividers-ios links-list">
+            <!--ul>
+              ${user.issues.map((link) => $h`
+              <li><a class="external" target="_blank" href="${link.url}">${link.title}</a></li>
+              `)}
+            </ul-->
+    
+           <!-- Error Lists--> 
+            <table border="1" align="center">
+              <thead>
+                <tr>
+                  <th class="label-cell">Server Name</th>
+                  <th class="numeric-cell">Error Message</th>
+                  <th class="numeric-cell">Time Stamp</th>
+                  <th class="numeric-cell">Status</th>
+                  <th class="numeric-cell">AI RCA</th>
+                  <!-- th class="numeric-cell">Carbs</th>
+                  <th class="numeric-cell">Protein (g)</th>
+                  <th class="medium-only">Comment</th -->
+                </tr>
+              </thead>
+              <tbody>
+                ${errors2json.map((erroritem) => $h`
+                   <tr>
+                    <td class="label-cell">${erroritem.server_Name}</td>
+                    <td class="numeric-cell">${erroritem.error_Message}</td>
+                    <td class="numeric-cell">${erroritem.created_at}</td>
+                    <td class="numeric-cell">${erroritem.status}</td>
+                    <td class="numeric-cell"><a  href="/errdetails/${erroritem.id}/">View</a></td>
+                    <!-- td class="numeric-cell">24</td>
+                    <td class="numeric-cell">4.0</td>
+                    <td class="medium-only">Super tasty</td -->
+                  </tr>
+    
+                  `)}
+    
+               
+               
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
   </div>
 </template>
 <script>
@@ -65,6 +124,7 @@
   export default (props) => {
     const user = props.user;
     const errorsjson=props.errorsjson;
+    const errors2json=props.errors2json;
 
     return $render;
 

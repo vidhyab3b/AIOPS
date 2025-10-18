@@ -9,15 +9,83 @@
           <span class="if-not-md">Back</span>
         </a>
       </div>
-      <div class="title">About</div>
+      <div class="title">Contributors </div>
+      
     </div>
   </div>
   <div class="page-content">
-    <div class="block-title">About My App</div>
+    
     <div class="block">
-      <p>This is a the Web console of AIOPS</p>
-      <p>This is a proof of concept to show AI and Ansible Ops Automation use cases</p>
-      <p>Created by TAM SG and ROSEA Team</p>
+      <div class="list list-strong-ios list-outline-ios list-dividers-ios">
+        <ul>
+          <li>
+            <div class="item-content">
+              <div class="chip">
+                <div class="chip-media"><img src="../assets/vidhya.png" /></div>
+              </div>
+              <div class="item-inner">
+                <div class="item-title">
+                  Vidhya Vidhya - TAM SG <br/> 
+                  The Orchestrator
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="chip">
+                <div class="chip-media"><img src="../assets/nelsonhomer.jpeg" /></div>
+              </div>
+              <div class="item-inner">
+                <div class="item-title">
+                  Nelson Homer Talag - TAM Rosea <br/> 
+                  The Polyglot Slave Coder
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="chip">
+                <div class="chip-media"><img src="../assets/rahul.png" /></div>
+              </div>
+              <div class="item-inner">
+                <div class="item-title">
+                  Rahul Manglekar - TAM SG <br/> 
+                  The Automation Guru
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="chip">
+                <div class="chip-media"><img src="../assets/marvin.jpg" /></div>
+              </div>
+              <div class="item-inner">
+                <div class="item-title">
+                  Marvin Roy Alvarez - TAM Lead SG <br/> 
+                  The TAM Jedi Master 
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="chip">
+                <div class="chip-media"><img src="../assets/Anthony_Lin.png" /></div>
+              </div>
+              <div class="item-inner">
+                <div class="item-title">
+                  Juncheng Anthony Lin - SSP SG <br/> 
+                  MacGyver Personified
+                </div>
+              </div>
+            </div>
+            
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

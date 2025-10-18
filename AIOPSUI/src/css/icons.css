@@ -54,3 +54,17 @@
   font-feature-settings: 'liga';
   text-align: center;
 }
+.section-with-image {
+  background-image: url('../assets/ai-ml-illustration_1.jpeg');
+  background-size: cover; /* or contain, depending on your needs */
+  background-position: center;
+  height: 300px; /* example height */
+}
+.section-with-logo {
+  background-image: url('../assets/Logo-RedHat-B-Red-RGB.png');
+  background-size: contain; /* or contain, depending on your needs */
+  background-position: center;
+  background-repeat: no-repeat;
+  /* height: 100%; example height */
+
+}

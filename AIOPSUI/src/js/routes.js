@@ -92,7 +92,7 @@ var routes = [
 
       // User ID from request
       var userId = to.params.userId;
-
+      
       // Simulate Ajax Request
       setTimeout(function () {
         // We got user data from request
@@ -125,8 +125,9 @@ var routes = [
         };
 
       var errorsjson;
-      //call all errors
-      fetch( app.store.state.baseurl + "/my-errors/all", {
+      var errors2json;
+      //call open errors
+      fetch( app.store.state.baseurl + "/my-errors/open", {
         method: 'GET',
         headers: {
            'type': 'application/json',
@@ -134,22 +135,64 @@ var routes = [
            'origin': ''
         },
       })
-       .then(res => res.json())
-       .then((data) => {
-          //console.log(data);
-          errorsjson=data;
-          resolve(
-            {
-              component: RequestAndLoad,
-            },
-            {
-              props: {
-                user: user,
-                errorsjson: errorsjson
-              }
-            }
-          );
+       .then((res) => { 
+        // console.log(res);
+        
+        if (res.ok) {
+          return res.json();
+        }
+        throw new Error(res.status);
+        
        })
+       .then((data) => {
+          // console.log(data);
+          errorsjson=data;
+          fetch( app.store.state.baseurl + "/my-errors/closed", {
+            method: 'GET',
+            headers: {
+               'type': 'application/json',
+               'accept': 'application/json',
+               'origin': ''
+            },
+          })
+           .then((res) => { 
+            // console.log(res);
+            
+            if (res.ok) {
+              return res.json();
+            }
+            throw new Error(res.status);
+            
+           })
+           .then((data) => {
+              // console.log(data);
+              errors2json=data;
+              console.log(errors2json);
+              console.log(errorsjson);
+              resolve(
+                {
+                  component: RequestAndLoad,
+                },
+                {
+                  props: {
+                    user: user,
+                    errorsjson: errorsjson,
+                    errors2json: errors2json
+                  }
+                }
+              );
+           })
+
+
+
+
+
+       })
+
+
+       //Fetch Closed Issues
+    
+
         // Hide Preloader
         app.preloader.hide();
         

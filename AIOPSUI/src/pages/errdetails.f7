@@ -10,6 +10,12 @@
         </a>
       </div>
       <div class="title">RCA Triage and Remidiation </div>
+      <div class="right">
+        <a href="/" class="link home">
+          <i class="icon f7-icons ">house</i>
+        </a>
+      </div>
+      
     </div>
     
   </div>
@@ -191,7 +197,7 @@
               </div> -->
               <div class="text-editor text-editor-resizable" id="aiprompt-editor" data-placeholder="Enter text..."
               data-mode="popover" >
-                <div class="text-editor-content" contenteditable>${errdata.error_Message} please create an ansible playbook check status and start the services to fix this issue. please provide yaml output only</div>
+                <div class="text-editor-content " contenteditable><b>${errdata.error_Message} please create an ansible playbook check status and start the services to fix this issue. please provide yaml output only</b></div>
               </div>
             </div>
           </div>
@@ -571,8 +577,8 @@ today =  yyyy + '-' + mm +  '-' + dd ;
           console.log(error)
           if (error=='Error: 500') {
               //alert('Record has been saved to database')
-              app.dialog.alert("Status: 1 </br>" + 
-                           "Message: Record has been saved to database" 
+              app.dialog.alert("Status Code: 1 </br>" + 
+                           "Message: Playbook has been saved to database" 
               );
               getrcalist();
           } else {
@@ -658,7 +664,7 @@ today =  yyyy + '-' + mm +  '-' + dd ;
        .then((data) => {
           //console.log(data);
           //{sendstatus: '1', sendmessage: 'ansible script sent to ansible server for record : [503]'}
-          app.dialog.alert("Status: " + data.sendstatus + "</br>" + 
+          app.dialog.alert("Status Code: " + data.sendstatus + "</br>" + 
                            "Message: " + data.sendmessage
           );
           app.preloader.hide();

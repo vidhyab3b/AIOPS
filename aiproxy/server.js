@@ -10,7 +10,7 @@ import { exitCode } from 'process';
 
 config(); 
 const app = express();
-const port = '8002';
+const port = process.env.aiporxyport || '8002';
 
 
 app.use(cors());
@@ -19,7 +19,10 @@ var prompt="";
 var rcaid="";
 app.post('/api/generate', async (req, res) => {
   try {
-    const apiKey ='AIzaSyBwHJbpEFvAKikUwTOM0pzTkeAtfK8Fn-8';
+    //process.env.geminiapiKey 
+    //const apiKey ='AIzaSyBwHJbpEFvAKikUwTOM0pzTkeAtfK8Fn-8';
+    const apiKey =  process.env.geminiapiKey  || 'AIzaSyBwHJbpEFvAKikUwTOM0pzTkeAtfK8Fn-8';
+    const geminiurl =  process.env.geminiUrl  ||'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=';
     prompt = req.body;
     //  console.log(prompt);
     // const data = prompt
@@ -38,7 +41,8 @@ app.post('/api/generate', async (req, res) => {
     const response = await axios({
       method: 'POST',
       // url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`,
-      url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey,
+     // url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey,
+      url: geminiurl + apiKey,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -80,7 +84,7 @@ app.post('/api/approve', async (req, res) => {
     }
     const data = {
       sendstatus: "1",
-      sendmessage:"ansible script sent to ansible server for record : ["+rcaid+"]"
+      sendmessage:"Playbook has been sent to Ansible sever for execution: ["+rcaid+"]"
     };
     res.json(data);
     }

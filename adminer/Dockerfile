@@ -1,4 +1,4 @@
-FROM docker.io/library/php:8.2-cli
+FROM php:8.2-cli
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
 
@@ -8,3 +8,4 @@ COPY . /opt/app-root/src
 CMD /bin/bash -c 'php -S 0.0.0.0:8000'
 
 EXPOSE 8000
+

@@ -54,9 +54,9 @@
   
   <div class="tabs">
     <div id="tab-1" class="page-content tab tab-active">
-      <div class="list list-strong inset list-dividers-ios links-list">
+      <div class="list list-strong inset list-dividers-ios links-list card data-table">
  
-        <table border="1" align="center">
+        <table border="0" align="center">
         
           <tbody>
           
@@ -240,9 +240,9 @@
     </div>
    
     <div class="block-title">Genrated AI Playbooks  </div>
-    <div class="list list-strong inset list-dividers-ios links-list">
+    <div class="list list-strong inset list-dividers-ios links-list card data-table">
     
-      <table border="1" align="center">
+      <table border="0" align="center">
         <thead>
           <tr>
             <th class="label-cell">Prompt Date</th>
@@ -359,8 +359,8 @@
           </div>
         </div>
         <div class="page-content">
-          
-          <table border="1" align="center">
+          <div class="card data-table">
+          <table border="0" align="center">
             <thead>
               <tr>
                 <th class="label-cell">Execution Date</th>
@@ -390,7 +390,7 @@
              
             </tbody>
           </table>
-         
+        </div>
         </div>
       </div>
     </div>

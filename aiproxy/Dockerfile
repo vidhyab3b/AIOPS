@@ -41,7 +41,8 @@
     RUN npm install && mkdir /app/script && chmod -R 777 /app/script
     ENV AIOPSSHPATH=/app/script
     COPY --chown=1001:1001 . .
-    COPY aiops-script.sh /app/script
+    # COPY aiops-script.sh /app/script
+    RUN mv /app/aiops-script.sh /app/script && chmod -R 777 /app/script
 
     EXPOSE 8002
     CMD ["node", "server.js"]

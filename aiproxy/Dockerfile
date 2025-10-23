@@ -20,7 +20,7 @@
 
     RUN dnf install -y https://dev.mysql.com/get/mysql80-community-release-el8-3.noarch.rpm --nogpgcheck && \
         dnf install -y mysql-shell --nogpgcheck && \
-        dnf clean all && rpm -ql mysql-shell | head -20
+        dnf clean all 
     
     # ---------- Stage 2: Main app image ----------
     FROM registry.access.redhat.com/ubi8/nodejs-18

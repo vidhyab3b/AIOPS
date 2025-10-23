@@ -44,6 +44,7 @@ export default async () => {
     },
     server: {
       host: true,
+      allowedhosts: ["localhost","aiopsui-aiops.apps.cluster-wkq7q.wkq7q.sandbox2937.opentlc.com"]
     },
     esbuild: {
       jsxFactory: '$jsx',

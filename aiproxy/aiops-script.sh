@@ -8,7 +8,6 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-echo "This is Git Toke - $GIT_TOKEN"
 DB_HOST="mysql-db.aiops.svc.cluster.local"
 DB_USER="mysql"
 DB_PASS="redhat"
@@ -32,12 +31,13 @@ echo -e "$yaml_content" | sed 's/`//g' > "$FILE_TO_ADD"
 REPO_URL="https://vidhyab3b:"$GIT_TOKEN"@github.com/vidhyab3b/AIOPS-Demo.git"
 COMMIT_MSG="Add $FILE_TO_ADD"
 WORK_DIR="temp_git_repo_$$"
-git remote set-url origin $REPO_URL
 
 # Clone repo
 echo "Cloning repository..."
 git clone "$REPO_URL" "$WORK_DIR"
 cd "$WORK_DIR"
+git remote set-url origin $REPO_URL
+
 
 if [ ! -f $FILE_TO_ADD ]; then
 # Copy file into the repo

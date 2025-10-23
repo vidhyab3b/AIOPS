@@ -32,7 +32,8 @@
     COPY --from=builder /usr/libexec/mysqlsh /usr/libexec/mysqlsh
     COPY --from=builder /usr/share/mysqlsh /usr/share/mysqlsh
     COPY --from=builder /usr/lib/mysqlsh /usr/lib/mysqlsh
-    
+    COPY --from=builder /usr/bin/jq /usr/bin/jq
+
     # Copy project files with correct ownership
     COPY --chown=1001:1001 package*.json ./
     RUN npm install && mkdir /app/script && chmod -R 777 /app/script

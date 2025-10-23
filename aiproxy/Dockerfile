@@ -35,9 +35,9 @@
     
     # Copy project files with correct ownership
     COPY --chown=1001:1001 package*.json ./
-    RUN npm install
-    ENV AIOPSSHPATH=/root
-    COPY aiops-script.sh /root
+    RUN npm install && mkdir /script && chmod -R 777 /script
+    ENV AIOPSSHPATH=/script
+    COPY aiops-script.sh /script
     COPY --chown=1001:1001 . .
     
     EXPOSE 8002

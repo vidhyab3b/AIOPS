@@ -20,7 +20,7 @@
 
     RUN dnf install -y https://dev.mysql.com/get/mysql80-community-release-el8-3.noarch.rpm --nogpgcheck && \
         dnf install -y mysql-shell --nogpgcheck && \
-        dnf clean all && rpm -ql mysql-shell | head -20
+        dnf clean all
     
     # ---------- Stage 2: Main app image ----------
     FROM registry.access.redhat.com/ubi8/nodejs-18
@@ -35,9 +35,9 @@
     
     # Copy project files with correct ownership
     COPY --chown=1001:1001 package*.json ./
-    RUN npm install && mkdir /script && chmod -R 777 /script
+    RUN npm install && mkdir /root/script && chmod -R 777 /root/script
     ENV AIOPSSHPATH=/script
-    COPY aiops-script.sh /script
+    COPY aiops-script.sh root/script
     COPY --chown=1001:1001 . .
     
     EXPOSE 8002

@@ -33,6 +33,7 @@
     COPY --from=builder /usr/share/mysqlsh /usr/share/mysqlsh
     COPY --from=builder /usr/lib/mysqlsh /usr/lib/mysqlsh
     COPY --from=builder /usr/bin/jq /usr/bin/jq
+    COPY --from=builder /usr/lib64/libjq.so.1 /usr/lib64/libjq.so.1
 
     # Copy project files with correct ownership
     COPY --chown=1001:1001 package*.json ./

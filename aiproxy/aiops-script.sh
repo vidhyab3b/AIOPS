@@ -28,7 +28,7 @@ yaml_content=$(mysqlsh --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASS"
 
 echo -e "$yaml_content" | sed 's/`//g' > "$FILE_TO_ADD"
 
-REPO_URL="https://vidhyab3b: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@github.com/vidhyab3b/AIOPS-Demo.git"
+REPO_URL="https://vidhyab3b:"$GIT_TOKEN"@github.com/vidhyab3b/AIOPS-Demo.git"
 COMMIT_MSG="Add $FILE_TO_ADD"
 WORK_DIR="temp_git_repo_$$"
 

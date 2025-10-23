@@ -8,6 +8,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
+echo "This is Git Toke - $GIT_TOKEN"
 DB_HOST="mysql-db.aiops.svc.cluster.local"
 DB_USER="mysql"
 DB_PASS="redhat"

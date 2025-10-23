@@ -26,7 +26,7 @@ server_name=$(mysqlsh --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASS" 
 
 yaml_content=$(mysqlsh --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASS" --port="$PORT" --sql -e "USE $DB_NAME;SELECT $COLUMN_PLAYBOOK FROM $RCA_TABLE WHERE id = $ROW_ID;" | sed '1d' | sed 's/\\n/\n/g')
 
-echo -e "$yaml_content" | grep -v "\`\`\`" > "$FILE_TO_ADD"
+echo -e "$yaml_content" | grep -v "\\\`" > "$FILE_TO_ADD"
 
 REPO_URL="https://vidhyab3b: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@github.com/vidhyab3b/AIOPS-Demo.git"
 COMMIT_MSG="Add $FILE_TO_ADD"
@@ -91,15 +91,15 @@ else
   echo "Creating new job template..."
   # Create Job Template
   curl -k -u "$USERNAME:$PASSWORD" -X POST "$AAP_HOST/job_templates/" \
-  	-H 'Content-Type: application/json' \
-  	-d '{
-  	  "name": "'"$TEMPLATE_NAME"'",
-  	  "job_type": "run",
-  	  "inventory": '"$INVENTORY_ID"',
-  	  "project": '"$PROJECT_ID"',
-  	  "playbook": "'"$FILE_TO_ADD"'",
-  	  "credentials": '"$CREDENTIAL_ID"',
-  	  "ask_variables_on_launch": true
+      -H 'Content-Type: application/json' \
+      -d '{
+        "name": "'"$TEMPLATE_NAME"'",
+        "job_type": "run",
+        "inventory": '"$INVENTORY_ID"',
+        "project": '"$PROJECT_ID"',
+        "playbook": "'"$FILE_TO_ADD"'",
+        "credentials": '"$CREDENTIAL_ID"',
+        "ask_variables_on_launch": true
   }'
   TEMPLATE_ID=$(curl -sk -u "$USERNAME:$PASSWORD" "$AAP_HOST/job_templates/?name=$(jq -nr --arg v "$TEMPLATE_NAME" '$v|@uri')" | jq -r '.results[0].id // empty')
   curl -sk -u "$USERNAME:$PASSWORD" -X POST \
@@ -130,6 +130,6 @@ while true; do
 done
 
 
-mysqlsh --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASS" --port="$PORT" --sql -e "USE $DB_NAME; INSERT INTO Playbook_Status (ID, Server_Name, Execution_Status) VALUES ($error_id, '$server_name', '$STATUS');" 
+mysqlsh --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASS" --port="$PORT" --sql -e "USE $DB_NAME; INSERT INTO Playbook_Status (Error_ID, RCA_ID, Server_Name, Execution_Status) VALUES ($error_id, '$ROW_ID', '$server_name', '$STATUS');" 
 
 rm -rf temp_git_repo*

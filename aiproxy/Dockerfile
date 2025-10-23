@@ -19,8 +19,8 @@
     FROM registry.access.redhat.com/ubi8/ubi as builder
 
     RUN dnf install -y https://dev.mysql.com/get/mysql80-community-release-el8-3.noarch.rpm --nogpgcheck && \
-        dnf install -y mysql-shell --nogpgcheck && \
-        dnf clean all 
+        dnf install -y mysql-shell --nogpgcheck && dnf install jq -y && \
+        dnf clean all
     
     # ---------- Stage 2: Main app image ----------
     FROM registry.access.redhat.com/ubi8/nodejs-18
@@ -32,13 +32,17 @@
     COPY --from=builder /usr/libexec/mysqlsh /usr/libexec/mysqlsh
     COPY --from=builder /usr/share/mysqlsh /usr/share/mysqlsh
     COPY --from=builder /usr/lib/mysqlsh /usr/lib/mysqlsh
-    
+    COPY --from=builder /usr/bin/jq /usr/bin/jq
+    COPY --from=builder /usr/lib64/libjq.so.1 /usr/lib64/libjq.so.1
+    COPY --from=builder /usr/lib64/libonig.so.5 /usr/lib64/libonig.so.5
+
     # Copy project files with correct ownership
     COPY --chown=1001:1001 package*.json ./
-    RUN npm install
-    ENV AIOPSSHPATH=/root
-    COPY aiops-script.sh /root
+    RUN npm install && mkdir /app/script && chmod -R 777 /app/script
+    ENV AIOPSSHPATH=/app/script
     COPY --chown=1001:1001 . .
-    
+    # COPY aiops-script.sh /app/script
+    RUN mv /app/aiops-script.sh /app/script && chmod -R 777 /app/script
+
     EXPOSE 8002
     CMD ["node", "server.js"]

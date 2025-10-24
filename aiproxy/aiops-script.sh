@@ -27,7 +27,7 @@ server_name=$(mysqlsh --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASS" 
 yaml_content=$(mysqlsh --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASS" --port="$PORT" --sql -e "USE $DB_NAME;SELECT $COLUMN_PLAYBOOK FROM $RCA_TABLE WHERE id = $ROW_ID;" | sed '1d' | sed 's/\\n/\n/g')
 
 # echo -e "$yaml_content" | sed 's/`//g' > "$FILE_TO_ADD"
-echo -e "$yaml_content" | sed 's/`//g' | sed '/^```yaml$/d; /^```$/d; /^---$/d' > "$FILE_TO_ADD"
+echo -e "$yaml_content" | sed -e 's/`//g' -e '/^```yaml$/d' -e '/^yaml$/d' -e '/^```$/d' -e '/^---$/d' > "$FILE_TO_ADD"
 
 REPO_URL="https://vidhyab3b:"$GIT_TOKEN"@github.com/vidhyab3b/AIOPS-Demo.git"
 COMMIT_MSG="Add $FILE_TO_ADD"

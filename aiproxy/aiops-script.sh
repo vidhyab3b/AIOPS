@@ -134,7 +134,7 @@ done
 
 mysqlsh --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASS" --port="$PORT" --sql -e "USE $DB_NAME; INSERT INTO Playbook_Status (Error_ID, RCA_ID, Server_Name, Execution_Status) VALUES ($error_id, '$ROW_ID', '$server_name', '$STATUS');" 
 if [[ "$STATUS" == "successful" ]]; then
-    mysqlsh --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASS" --port="$PORT" --sql -e "USE $DB_NAME; UPDATE $ERROR_TABLE SET Status = "Closed" WHERE id = $error_id;"
+    mysqlsh --host="$DB_HOST" --user="$DB_USER" --password="$DB_PASS" --port="$PORT" --sql -e "USE $DB_NAME; UPDATE $ERROR_TABLE SET Status = 'Closed' WHERE id = $error_id;"
 fi
 
 rm -rf temp_git_repo*

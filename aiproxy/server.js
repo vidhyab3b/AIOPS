@@ -6,17 +6,26 @@ import { error } from 'console';
 import { execa } from "execa";
 import { exitCode } from 'process';
 
- 
-
 config(); 
 const app = express();
 const port = process.env.aiporxyport || '8002';
 
+// ===== Fixed CORS Section =====
+// Allow all origins and handle preflight automatically
+app.use(cors({
+  origin: '*', // Allow all origins
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'], // Include all HTTP methods your client may use
+  allowedHeaders: ['Content-Type','Authorization'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}));
 
-app.use(cors());
+// Express already handles OPTIONS preflight, so no need for app.options('*', cors());
+
 app.use(express.json());
 var prompt="";
 var rcaid="";
+
 app.post('/api/generate', async (req, res) => {
   try {
     //process.env.geminiapiKey 
@@ -24,7 +33,7 @@ app.post('/api/generate', async (req, res) => {
     const apiKey =  process.env.geminiapiKey  || 'AIzaSyBwHJbpEFvAKikUwTOM0pzTkeAtfK8Fn-8';
     const geminiurl =  process.env.geminiUrl  ||'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=';
     prompt = req.body;
-    //  console.log(prompt);
+    // console.log(prompt);
     // const data = prompt
     const data = {
       contents: [
@@ -41,7 +50,7 @@ app.post('/api/generate', async (req, res) => {
     const response = await axios({
       method: 'POST',
       // url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`,
-     // url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey,
+      // url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey,
       url: geminiurl + apiKey,
       headers: {
         'Content-Type': 'application/json',
@@ -61,35 +70,25 @@ app.post('/api/generate', async (req, res) => {
                            error: error.message  });
   }
 });
+
 app.post('/api/approve', async (req, res) => {
-    rcaid = req.body.rcaid;
-    // console.log(rcaid); 
-    // console.log(process.env.AIOPSSHPATH+ '/aiops-script.sh'); 
-   
-    //exceute bash script 
-    
-    try {
-     
+  rcaid = req.body.rcaid;
+  // console.log(rcaid); 
+  // console.log(process.env.AIOPSSHPATH+ '/aiops-script.sh'); 
 
-    
-      const { stdout } = await execa("sh " , ["aiops-script.sh "+ rcaid], { cwd: process.env.AIOPSSHPATH,shell:true } ); 
-      console.log(stdout);
+  // execute bash script 
+  try {
+    const { stdout } = await execa("sh", ["aiops-script.sh " + rcaid], { cwd: process.env.AIOPSSHPATH, shell:true }); 
+    console.log(stdout);
+  } catch (error) {
+    // console.log(error);
+    res.status(500).json({ sendstatus: 0,
+                           errorcode: error.code,
+                           errorname: error.name,
+                           sendmessage: error.message });
+    return; // Important to stop execution after error
+  }
 
-    } catch (error) {
-        // console.log(error);
-          res.status(500).json({ sendstatus: 0,
-          errorcode: error.code,
-          errorname: error.name,
-          sendmessage: error.message  });
-    }
-    const data = {
-      sendstatus: "1",
-      sendmessage:"Playbook has been sent to Ansible sever for execution: ["+rcaid+"]"
-    };
-    res.json(data);
-    }
-);
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+  const data = {
+    sendstatus: "1",
+    sendmessage:"Playbook has b

@@ -41,3 +41,27 @@ app.post('/api/generate', async (req, res) => {
               text: prompt.text,
             },
           ],
+        },
+      ],
+      // You can add more fields here if needed, like temperature, candidateCount, etc.
+    };
+
+    // Make POST request to Gemini API
+    const response = await axios.post(`${geminiurl}${apiKey}`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Send back the response from Gemini API
+    res.json(response.data);
+
+  } catch (err) {
+    console.error('Error calling Gemini API:', err);
+    res.status(500).json({ error: 'Failed to generate content' });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`AI Proxy server running on port ${port}`);
+});

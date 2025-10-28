@@ -91,4 +91,11 @@ app.post('/api/approve', async (req, res) => {
 
   const data = {
     sendstatus: "1",
-    sendmessage:"Playbook has b
+    sendmessage:"Playbook has been sent to Ansible sever for execution: ["+rcaid+"]"
+  };
+  res.json(data);
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

@@ -89,15 +89,27 @@ app.post('/api/approve', async (req, res) => {
 });
 
 // ===== Route: Proxy /my-errors/open =====
-app.get('/api/my-errors/open', async (req, res) => {
+app.all('/api/my-errors/open', async (req, res) => {
   try {
     // Forward the request to the real backend
-    const response = await axios.get('https://aiproxy-aiops.apps.cluster-zhg5b.zhg5b.sandbox515.opentlc.com/my-errors/open', {
+    const method = req.method.toLowerCase();
+    const axiosConfig = {
+      method,
+      url: 'https://aiproxy-aiops.apps.cluster-zhg5b.zhg5b.sandbox515.opentlc.com/my-errors/open',
       headers: {
-        // Forward auth headers if needed
-        Authorization: req.headers.authorization || ''
-      }
-    });
+        Authorization: req.headers.authorization || '',
+        'Content-Type': req.headers['content-type'] || 'application/json'
+      },
+      data: req.body
+    };
+
+    const response = await axios(axiosConfig);
+
+    // Ensure CORS headers are sent
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+
     res.json(response.data);
   } catch (error) {
     res.status(500).json({ 

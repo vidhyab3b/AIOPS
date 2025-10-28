@@ -121,6 +121,39 @@ app.all('/api/my-errors/open', async (req, res) => {
   }
 });
 
+// ===== Route: Proxy /my-errors/closed =====
+app.all('/api/my-errors/closed', async (req, res) => {
+  try {
+    // Forward the request to the real backend
+    const method = req.method.toLowerCase();
+    const axiosConfig = {
+      method,
+      url: 'https://aiproxy-aiops.apps.cluster-zhg5b.zhg5b.sandbox515.opentlc.com/my-errors/closed',
+      headers: {
+        Authorization: req.headers.authorization || '',
+        'Content-Type': req.headers['content-type'] || 'application/json'
+      },
+      data: req.body
+    };
+
+    const response = await axios(axiosConfig);
+
+    // Ensure CORS headers are sent
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ 
+      status: 0,
+      errorcode: error.code,
+      errorname: error.name,
+      error: error.message 
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

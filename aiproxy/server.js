@@ -13,7 +13,11 @@ const app = express();
 const port = process.env.aiporxyport || '8002';
 
 
-app.use(cors());
+app.use(cors({
+  origin: '*',            // Allow all origins
+  methods: ['GET','POST','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization']
+}));
 app.use(express.json());
 var prompt="";
 var rcaid="";

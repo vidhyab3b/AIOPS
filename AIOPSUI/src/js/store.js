@@ -7,8 +7,8 @@ const store = createStore({
     // aiproxybaseurl: "http://localhost:8002",
     // baseurl: "http://localhost:8080", 
     // aiproxybaseurl: "http://localhost:8002",
-    baseurl: "https://aiopsui-aiops.apps.cluster-zhg5b.zhg5b.sandbox515.opentlc.com",
-    aiproxybaseurl: "https://aiopsui-aiops.apps.cluster-zhg5b.zhg5b.sandbox515.opentlc.com",
+    baseurl: "https://aiops-qks-aiops.apps.cluster-zhg5b.zhg5b.sandbox515.opentlc.com",
+    aiproxybaseurl: "https://aiproxy-aiops.apps.cluster-zhg5b.zhg5b.sandbox515.opentlc.com",
     products: [
       {
         id: '1',

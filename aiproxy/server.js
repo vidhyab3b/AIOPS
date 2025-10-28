@@ -6,17 +6,27 @@ import { error } from 'console';
 import { execa } from "execa";
 import { exitCode } from 'process';
 
- 
-
 config(); 
 const app = express();
 const port = process.env.aiporxyport || '8002';
 
+// ===== Fixed CORS Section =====
+// Allow all origins dynamically and handle preflight requests
+app.use(cors({
+  origin: '*',            // Allow all origins
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],  // Include all HTTP methods your client may use
+  allowedHeaders: ['Content-Type','Authorization'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}));
 
-app.use(cors());
+// Handle OPTIONS preflight for all routes
+app.options('*', cors());
+
 app.use(express.json());
 var prompt="";
 var rcaid="";
+
 app.post('/api/generate', async (req, res) => {
   try {
     //process.env.geminiapiKey 

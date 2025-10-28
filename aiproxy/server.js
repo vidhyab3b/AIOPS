@@ -2,9 +2,7 @@ import express from 'express'
 import axios from 'axios'; 
 import cors from 'cors';
 import { config } from 'dotenv';
-import { error } from 'console';
 import { execa } from "execa";
-import { exitCode } from 'process';
 
 config(); 
 const app = express();
@@ -20,21 +18,19 @@ app.use(cors({
   optionsSuccessStatus: 204
 }));
 
-// Express already handles OPTIONS preflight, so no need for app.options('*', cors());
-
 app.use(express.json());
+
 var prompt="";
 var rcaid="";
 
+// ===== Route: Generate content =====
 app.post('/api/generate', async (req, res) => {
   try {
-    //process.env.geminiapiKey 
-    //const apiKey ='AIzaSyBwHJbpEFvAKikUwTOM0pzTkeAtfK8Fn-8';
-    const apiKey =  process.env.geminiapiKey  || 'AIzaSyBwHJbpEFvAKikUwTOM0pzTkeAtfK8Fn-8';
-    const geminiurl =  process.env.geminiUrl  ||'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=';
+    const apiKey = process.env.geminiapiKey || 'AIzaSyBwHJbpEFvAKikUwTOM0pzTkeAtfK8Fn-8';
+    const geminiurl = process.env.geminiUrl || 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=';
+    
     prompt = req.body;
-    // console.log(prompt);
-    // const data = prompt
+
     const data = {
       contents: [
         {
@@ -49,51 +45,68 @@ app.post('/api/generate', async (req, res) => {
 
     const response = await axios({
       method: 'POST',
-      // url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`,
-      // url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey,
       url: geminiurl + apiKey,
       headers: {
         'Content-Type': 'application/json',
       },
-      params: {
-        key: apiKey,
-      },
+      params: { key: apiKey },
       data: data,
     });
 
     res.json(response.data);
   } catch (error) {
-    // console.log(error)
-    res.status(500).json({ status: 0,
-                           errorcode: error.code,
-                           errorname: error.name,
-                           error: error.message  });
+    res.status(500).json({ 
+      status: 0,
+      errorcode: error.code,
+      errorname: error.name,
+      error: error.message  
+    });
   }
 });
 
+// ===== Route: Approve playbook =====
 app.post('/api/approve', async (req, res) => {
   rcaid = req.body.rcaid;
-  // console.log(rcaid); 
-  // console.log(process.env.AIOPSSHPATH+ '/aiops-script.sh'); 
 
-  // execute bash script 
   try {
     const { stdout } = await execa("sh", ["aiops-script.sh " + rcaid], { cwd: process.env.AIOPSSHPATH, shell:true }); 
     console.log(stdout);
   } catch (error) {
-    // console.log(error);
-    res.status(500).json({ sendstatus: 0,
-                           errorcode: error.code,
-                           errorname: error.name,
-                           sendmessage: error.message });
-    return; // Important to stop execution after error
+    res.status(500).json({ 
+      sendstatus: 0,
+      errorcode: error.code,
+      errorname: error.name,
+      sendmessage: error.message 
+    });
+    return;
   }
 
   const data = {
     sendstatus: "1",
-    sendmessage:"Playbook has been sent to Ansible sever for execution: ["+rcaid+"]"
+    sendmessage: "Playbook has been sent to Ansible server for execution: [" + rcaid + "]"
   };
   res.json(data);
+});
+
+// ===== Route: Proxy /my-errors/open =====
+app.get('/api/my-errors/open', async (req, res) => {
+  try {
+    // Forward the request to the real backend
+    const response = await axios.get('https://aiproxy-aiops.apps.cluster-zhg5b.zhg5b.sandbox515.opentlc.com/my-errors/open', {
+      headers: {
+        // Forward auth headers if needed
+        Authorization: req.headers.authorization || ''
+      }
+    });
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ 
+      status: 0,
+      errorcode: error.code,
+      errorname: error.name,
+      error: error.message 
+    });
+  }
 });
 
 app.listen(port, () => {

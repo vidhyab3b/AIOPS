@@ -39,9 +39,8 @@ cd "$WORK_DIR"
 git remote set-url origin $REPO_URL
 
 
-if [ ! -f $FILE_TO_ADD ]; then
 # Copy file into the repo
-cp "../$FILE_TO_ADD" .
+cp -f "../$FILE_TO_ADD" .
 
 # Configure Git Global Variables
 git config --global user.name "Vidhya"
@@ -61,7 +60,6 @@ echo "Done. File '$FILE_TO_ADD' has been added and pushed to $REPO_URL."
 # Cleanup
 cd ..
 rm -rf "$WORK_DIR"
-fi
 
 # Variables
 AAP_HOST="$CONTROLLER_URL"

@@ -72,7 +72,7 @@ CREDENTIAL_ID=$(curl -sk -u "$USERNAME:$PASSWORD" "$AAP_HOST/credentials/?name=N
 
 # Sync Project
 curl -k -u "$USERNAME:$PASSWORD" -X POST "$AAP_HOST/projects/$PROJECT_ID/update/" > /dev/null
-
+sleep 10s
 TEMPLATE_ID=$(curl -sk -u "$USERNAME:$PASSWORD" "$AAP_HOST/job_templates/?name=$(jq -nr --arg v "$TEMPLATE_NAME" '$v|@uri')" | jq -r '.results[0].id // empty')
 
 if [ -n "$TEMPLATE_ID" ]; then

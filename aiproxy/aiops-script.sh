@@ -64,9 +64,9 @@ rm -rf "$WORK_DIR"
 fi
 
 # Variables
-AAP_HOST="https://aap-aap.apps.cluster-wkq7q.wkq7q.sandbox2937.opentlc.com/api/controller/v2"
-USERNAME="admin"
-PASSWORD="MjYxODQy"
+AAP_HOST="$CONTROLLER_URL"
+USERNAME="$AAP_USERNAME"
+PASSWORD="$AAP_PASSWORD"
 TEMPLATE_NAME="NGINX Job Template"      
 PROJECT_ID=$(curl -sk -u "$USERNAME:$PASSWORD" "$AAP_HOST/projects/?name=AIOPS%20REPO" | jq -r '.results[0].id')
 INVENTORY_ID=$(curl -sk -u "$USERNAME:$PASSWORD" "$AAP_HOST/inventories/?name=RHEL" | jq -r '.results[0].id')
